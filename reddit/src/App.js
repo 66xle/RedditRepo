@@ -1,11 +1,11 @@
 
-
 function App() {
   return (
     <div className="App">
-      <header>
-        <h1 class="text-3xl font-bold underline">Yes</h1>
-      </header>
+      <div className="border-solid border-2 border-sky-500">
+        <h1 className="text-9xl">Reddit App</h1>
+      </div>
+      <button className="w-10 h-10">kdklsfahjlk;sd</button>
     </div>
   );
 }
