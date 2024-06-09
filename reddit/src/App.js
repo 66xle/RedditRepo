@@ -1,3 +1,5 @@
+import DisplayPosts from './Components/DisplayPosts.js';
+
 
 function App() {
   return (
@@ -9,6 +11,7 @@ function App() {
       <div id="content" className="flex flex-row justify-evenly bg-slate-800">
         <div id="postDisplay" className=" text-center w-4/5 m-5 border">
           <h2 className="text-white">Display</h2>
+          <DisplayPosts />
         </div>
 
         <div id="navBar" className="text-center w-1/2 h-screen m-5 shadow-2xl rounded-3xl bg-slate-950">
