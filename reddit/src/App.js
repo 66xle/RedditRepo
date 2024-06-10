@@ -14,7 +14,7 @@ function App() {
           <DisplayPosts />
         </div>
 
-        <div id="navBar" className="text-center w-1/2 h-screen m-5 shadow-2xl rounded-3xl bg-slate-950">
+        <div id="navBar" className="text-center sticky top-5 w-1/2 h-screen m-5 shadow-2xl rounded-3xl bg-slate-950">
           <h2 className="text-slate-600 pt-2.5">SubReddit</h2>
         </div>
       </div>
