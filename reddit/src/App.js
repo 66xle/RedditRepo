@@ -18,10 +18,6 @@ function App() {
           <h2 className="text-slate-600 pt-2.5">SubReddit</h2>
         </div>
       </div>
-      
-      
-
-      
     </div>
   );
 }
