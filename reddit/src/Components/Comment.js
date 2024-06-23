@@ -1,7 +1,5 @@
 
 
-
-
 function Comment({comment}) {
 
     return (

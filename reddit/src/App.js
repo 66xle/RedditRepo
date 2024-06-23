@@ -2,6 +2,10 @@ import DisplayPosts from './Components/DisplayPosts.js';
 
 
 function App() {
+
+
+  
+
   return (
     <div className="App">
       <div className="text-center h-20 bg-slate-900" >
