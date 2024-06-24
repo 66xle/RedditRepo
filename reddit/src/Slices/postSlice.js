@@ -92,6 +92,7 @@ const postSlice = createSlice({
                     })
                 })
                 
+                
             })
             .addCase(loadSubRedditPosts.rejected, (state) => {
                 state.isLoadingPosts = false;

@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleComment } from '../Slices/postSlice';
 import Comment from './Comment';
 
+import snuownd from '../packages/snuownd-master/snuownd';
+
 function Post({post}) {
+
+    var markdown = post.content;
+    var html = snuownd.getParser().render(markdown);
+    console.log(html);
 
     const dispatch = useDispatch();
 
@@ -16,8 +22,8 @@ function Post({post}) {
             {/* Post Info */}
             <h1 className="text-left text-white text-xs">{post.author}</h1>
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
-            <div className='text-left'> 
-                <p className='text-slate-400'>{post.content}</p>
+            <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
+                <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
             {/* Under Content */}
             <div className='mt-2 flex flex-row text-slate-300'>
