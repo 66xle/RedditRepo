@@ -87,7 +87,7 @@ const postSlice = createSlice({
                         author: value.data.author,
                         title: value.data.title,
                         content: value.data.selftext,
-                        image: value.data.thumbnail,
+                        image: value.data.url,
                         likes: value.data.ups,
                     })
                 })

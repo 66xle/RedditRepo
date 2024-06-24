@@ -5,11 +5,10 @@ import Comment from './Comment';
 
 import snuownd from '../packages/snuownd-master/snuownd';
 
-function Post({post}) {
+function Post({post, showImage}) {
 
     var markdown = post.content;
     var html = snuownd.getParser().render(markdown);
-    console.log(html);
 
     const dispatch = useDispatch();
 
@@ -17,12 +16,20 @@ function Post({post}) {
         dispatch(toggleComment(post));
     };
 
+    if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(post.image)) {
+        showImage = true;
+    } else { 
+        showImage = false;
+    }
+    
+
     return (
         <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
             {/* Post Info */}
             <h1 className="text-left text-white text-xs">{post.author}</h1>
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
+                {showImage && <img src={post.image}/>}
                 <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
             {/* Under Content */}
