@@ -5,7 +5,10 @@ import Comment from './Comment';
 
 import snuownd from '../packages/snuownd-master/snuownd';
 
-function Post({post, showImage}) {
+function Post({post}) {
+
+    let showImage = false;
+    let showMedia = false;
 
     var markdown = post.content;
     var html = snuownd.getParser().render(markdown);
@@ -16,12 +19,16 @@ function Post({post, showImage}) {
         dispatch(toggleComment(post));
     };
 
+    // Check if url is an image
     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(post.image)) {
         showImage = true;
-    } else { 
-        showImage = false;
+    }
+
+    if (post.media !== null) {
+        showMedia = true;
     }
     
+
 
     return (
         <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
@@ -30,6 +37,7 @@ function Post({post, showImage}) {
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
                 {showImage && <img src={post.image}/>}
+                {showMedia && <video autoPlay><source src={post.media.reddit_video.fallback_url} /></video>}
                 <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
             {/* Under Content */}

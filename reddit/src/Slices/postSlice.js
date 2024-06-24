@@ -7,60 +7,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
     async () => {
-      const response = await fetch(`https://www.reddit.com/r/HonkaiStarRail.json`);
+      const response = await fetch(`https://www.reddit.com/r/WutheringWaves.json`);
       const json = await response.json();
       return json.data.children;
     }
 )
-
-const initialState = [
-    {
-        id: 1,
-        author: "Jack",
-        title: "TITLE",
-        content: 'Insert post here',
-        likes: 20000,
-        timePosted: 2,
-        isCommentToggled: false,
-        comments: [
-            {
-                content: "hello",
-                author: 'David',
-                likes: 10,
-                timePosted: 1,
-            },
-            {
-                content: "hello",
-                author: 'David',
-                likes: 10,
-                timePosted: 1,
-            }
-        ]
-    },
-    {
-        id: 2,
-        author: "Jack",
-        title: "TITLE",
-        content: 'Insert post here',
-        likes: 20000,
-        timePosted: 2,
-        isCommentToggled: false,
-        comments: [
-            {
-                content: "hello",
-                author: 'David',
-                likes: 10,
-                timePosted: 1,
-            },
-            {
-                content: "hello",
-                author: 'David',
-                likes: 10,
-                timePosted: 1,
-            }
-        ]
-    },       
-]
 
 const postSlice = createSlice({
     name: 'post',
@@ -88,6 +39,7 @@ const postSlice = createSlice({
                         title: value.data.title,
                         content: value.data.selftext,
                         image: value.data.url,
+                        media: value.data.media,
                         likes: value.data.ups,
                     })
                 })
