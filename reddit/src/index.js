@@ -4,6 +4,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from "@reduxjs/toolkit";
 import postReducer from './Slices/postSlice.js';
+import commentReducer from './Slices/commentSlice.js';
 
 import './index.css';
 
@@ -15,6 +16,7 @@ root.render(
     configureStore({
       reducer: {
           post: postReducer,
+          comment: commentReducer,
       },
     })
   }>
