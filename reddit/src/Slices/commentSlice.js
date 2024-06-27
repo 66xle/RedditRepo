@@ -6,8 +6,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadPostComments = createAsyncThunk(
     'posts/loadPostComments',
     async (id) => {
-      const response = await fetch(`https://www.reddit.com/r/WutheringWaves/comments/${id}.json`);
+      const response = await fetch(`https://www.reddit.com/r/WutheringWaves/comments/${id}/.json`);
       const json = await test.json();
+
 
       return json.data.children;
     }
@@ -31,7 +32,8 @@ const commentSlice = createSlice({
                 state.failedToLoadComments = false;
                 console.log(action.payload);
                 const data = action.payload;
-
+                
+                // console.log(data)
                 
             })
             .addCase(loadPostComments.rejected, (state) => {

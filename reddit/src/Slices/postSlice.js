@@ -9,6 +9,7 @@ export const loadSubRedditPosts = createAsyncThunk(
     async () => {
       const response = await fetch(`https://www.reddit.com/r/WutheringWaves.json`);
       const json = await response.json();
+
       return json.data.children;
     }
 )
@@ -41,10 +42,9 @@ const postSlice = createSlice({
                         image: value.data.url,
                         media: value.data.media,
                         likes: value.data.ups,
+                        isCommentToggle: false,
                     })
                 })
-                
-                
             })
             .addCase(loadSubRedditPosts.rejected, (state) => {
                 state.isLoadingPosts = false;
