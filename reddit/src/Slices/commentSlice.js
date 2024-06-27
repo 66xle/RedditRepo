@@ -6,7 +6,7 @@ export const loadPostComments = createAsyncThunk(
     'posts/loadPostComments',
     async (id) => {
       const response = await fetch(`r/WutheringWaves/comments/${id}/.json`);
-      const json = await test.json();
+      const json = await response.json();
 
 
       return json.data.children;
@@ -32,7 +32,7 @@ const commentSlice = createSlice({
                 console.log(action.payload);
                 const data = action.payload;
                 
-                // console.log(data)
+                console.log(data)
                 
             })
             .addCase(loadPostComments.rejected, (state) => {

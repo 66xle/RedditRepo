@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleComment } from '../Slices/postSlice';
 // import Comment from './Comment';
-import {loadPostComments, selectComment, isLoadingComments} from '../Slices/commentSlice.js';
+import {loadPostComments, selectComment} from '../Slices/commentSlice.js';
 
 import snuownd from '../packages/snuownd-master/snuownd';
 
@@ -15,6 +15,7 @@ function Post({post}) {
 
     useEffect(() => {
         dispatch(loadPostComments(post.id));
+        // eslint-disable-next-line
     }, [dispatch]);
 
     const handleComment = () => {
@@ -33,7 +34,6 @@ function Post({post}) {
     if (post.media !== null) {
         showMedia = true;
     }
-    
 
     var markdown = post.content;
     var html = snuownd.getParser().render(markdown);
@@ -45,7 +45,7 @@ function Post({post}) {
             <h1 className="text-left text-white text-xs">{post.author}</h1>
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
-                {showImage && <img src={post.image}/>}
+                {showImage && <img src={post.image} alt=""/>}
                 {showMedia && <video controls><source src={post.media.reddit_video.fallback_url} /></video>}
                 <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
