@@ -1,7 +1,7 @@
-import { react, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleComment } from '../Slices/postSlice';
-import Comment from './Comment';
+// import Comment from './Comment';
 import {loadPostComments, selectComment, isLoadingComments} from '../Slices/commentSlice.js';
 
 import snuownd from '../packages/snuownd-master/snuownd';

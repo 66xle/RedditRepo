@@ -1,4 +1,4 @@
-import { react, useEffect } from 'react';
+import { useEffect } from 'react';
 import Post from './Post.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadSubRedditPosts, selectPost, isLoading} from '../Slices/postSlice.js';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // get data
 
@@ -6,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadPostComments = createAsyncThunk(
     'posts/loadPostComments',
     async (id) => {
-      const response = await fetch(`https://www.reddit.com/r/WutheringWaves/comments/${id}/.json`);
+      const response = await fetch(`r/WutheringWaves/comments/${id}/.json`);
       const json = await test.json();
 
 

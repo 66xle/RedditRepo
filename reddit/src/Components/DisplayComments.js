@@ -1,4 +1,4 @@
-import { react, useEffect } from 'react';
+import { useEffect } from 'react';
 import Comment from './Comment.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPostComments, selectComment, isLoadingComments} from '../Slices/commentSlice.js';
