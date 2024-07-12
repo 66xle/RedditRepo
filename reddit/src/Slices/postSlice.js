@@ -6,10 +6,40 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
     async () => {
-      const response = await fetch(`https://www.reddit.com/r/WutheringWaves.json`);
-      const json = await response.json();
+        console.log("run")
+        try {
+            const response = await fetch(`r/WutheringWaves.json`);
+            console.log(response.headers.get("x-ratelimit-used"));
+            console.log(response);
+            if (response.status == 429) {
+                console.log("Limit Hit");
+                return Promise.reject("Too many requests");
+            } else {
+                const json = await response.json();
+                console.log(json);
+                return json.data.children;
+            }
 
-      return json.data.children;
+        } catch (err) {
+            console.log(err);
+        }
+                
+
+            
+        //     // const json = response.json();
+        
+        // }, error => {
+        //     console.log(error);
+        // })
+
+    //   const response = await fetch(`r/WutheringWaves.json`);
+    //   console.log("rate: " + response.headers.get("x-ratelimit-used")
+    //              + " reset: " + response.headers.get("x-ratelimit-reset"))
+    //   const json = await response.json();
+
+        
+
+    //   return json.data.children;
     }
 )
 
@@ -25,11 +55,11 @@ const postSlice = createSlice({
             .addCase(loadSubRedditPosts.pending, (state) => {
                 state.isLoadingPosts = true;
                 state.failedToLoadPosts = false;
+                console.log("pending");
             })
             .addCase(loadSubRedditPosts.fulfilled, (state, action) => {
                 state.isLoadingPosts = false;
                 state.failedToLoadPosts = false;
-                console.log(action.payload);
                 const data = action.payload;
 
                 data.map(value => {
@@ -44,11 +74,14 @@ const postSlice = createSlice({
                         isCommentToggle: false,
                     })
                 })
+
             })
             .addCase(loadSubRedditPosts.rejected, (state) => {
+                console.log("Failed to load");
                 state.isLoadingPosts = false;
                 state.failedToLoadPosts = true;
                 state.posts = [];
+
             })
     },
     reducers: {
@@ -63,6 +96,8 @@ const postSlice = createSlice({
 
 export const selectPost = (state) => state.post.posts;
 export const isLoading = (state) => state.post.isLoadingPosts;
+export const failedToLoad = (state) => state.post.failedToLoadPosts;
 
 export const {toggleComment} = postSlice.actions;
+
 export default postSlice.reducer;

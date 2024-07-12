@@ -1,19 +1,48 @@
 import { useEffect } from 'react';
 import Post from './Post.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSubRedditPosts, selectPost, isLoading} from '../Slices/postSlice.js';
+import { loadSubRedditPosts, selectPost, isLoading, failedToLoad} from '../Slices/postSlice.js';
+
+function FailedToLoad(dispatch) {
+    return (
+        <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
+            {/* Post Info */}
+            <h1 className="text-white text-xl">Failed To Load</h1>
+            
+            {/* Under Content */}
+            <div className='mt-2 text-slate-300'>
+                <button className='p-2 border rounded' onClick={() => dispatch(loadSubRedditPosts())}>Try Again</button>
+            </div>
+        </div>
+    )
+}
+
+function IsLoading() {
+    return (
+        <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
+            {/* Post Info */}
+            <h1 className="text-white text-xl">Loading...</h1>
+        </div>
+    )
+}
 
 function DisplayPosts() {
 
     const dispatch = useDispatch();
-    // const loadPosts = useSelector(loadSubRedditPosts);
-    // const isLoadingPosts = useSelector(isLoading);
-
+    const isLoadingPosts = useSelector(isLoading);
+    const failedToLoadPosts = useSelector(failedToLoad);
     const posts = useSelector(selectPost);
     
     useEffect(() => {
         dispatch(loadSubRedditPosts());
     }, [dispatch]);
+
+    if (failedToLoadPosts) {
+        FailedToLoad(dispatch);
+    } else if (isLoadingPosts) {
+        IsLoading();
+    } 
+    
 
     return (
         <div>
@@ -21,7 +50,6 @@ function DisplayPosts() {
                 posts.map(post => <Post post={post} key={post.id}/>)
             }
         </div>
-        
     )
 }
 

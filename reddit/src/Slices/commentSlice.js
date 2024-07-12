@@ -5,11 +5,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadPostComments = createAsyncThunk(
     'posts/loadPostComments',
     async (id) => {
-      const response = await fetch(`r/WutheringWaves/comments/${id}/.json`);
-      const json = await response.json();
+        try {
+            const response = await fetch(`r/WutheringWaves/comments/${id}/.json`);
+            console.log(response.headers.get("x-ratelimit-used"));
 
+            const json = await response.json();
 
-      return json.data.children;
+            return json.data.children;
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 )
 
@@ -32,7 +38,9 @@ const commentSlice = createSlice({
                 console.log(action.payload);
                 const data = action.payload;
                 
-                console.log(data)
+                
+
+                console.log("test");
                 
             })
             .addCase(loadPostComments.rejected, (state) => {
@@ -45,5 +53,6 @@ const commentSlice = createSlice({
 
 export const selectComment = (state) => state.comment.comments;
 export const isLoadingComment = (state) => state.comment.isLoadingComment;
+export const failedToLoad = (state) => state.comment.failedToLoadComments;
 
 export default commentSlice.reducer;
