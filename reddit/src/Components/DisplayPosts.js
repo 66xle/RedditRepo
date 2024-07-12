@@ -3,18 +3,10 @@ import Post from './Post.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadSubRedditPosts, selectPost, isLoading, failedToLoad} from '../Slices/postSlice.js';
 
+
 function FailedToLoad(dispatch) {
-    return (
-        <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
-            {/* Post Info */}
-            <h1 className="text-white text-xl">Failed To Load</h1>
-            
-            {/* Under Content */}
-            <div className='mt-2 text-slate-300'>
-                <button className='p-2 border rounded' onClick={() => dispatch(loadSubRedditPosts())}>Try Again</button>
-            </div>
-        </div>
-    )
+    
+    
 }
 
 function IsLoading() {
@@ -38,19 +30,27 @@ function DisplayPosts() {
     }, [dispatch]);
 
     if (failedToLoadPosts) {
-        FailedToLoad(dispatch);
+        return (
+            <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
+                {/* Post Info */}
+                <h1 className="text-white text-xl">Failed To Load</h1>
+                
+                {/* Under Content */}
+                <div className='mt-2 text-slate-300'>
+                    <button className='p-2 border rounded' onClick={() => dispatch(loadSubRedditPosts())}>Try Again</button>
+                </div>
+                {console.log("run")}
+            </div>
+        )
     } else if (isLoadingPosts) {
         IsLoading();
-    } 
-    
-
-    return (
-        <div>
-            {
-                posts.map(post => <Post post={post} key={post.id}/>)
-            }
-        </div>
-    )
+    } else {
+        return (
+            <div>
+                {posts.map(post => <Post post={post} key={post.id}/>)}
+            </div>
+        )
+    }
 }
 
 export default DisplayPosts;

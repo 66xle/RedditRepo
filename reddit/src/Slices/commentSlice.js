@@ -11,7 +11,7 @@ export const loadPostComments = createAsyncThunk(
 
             const json = await response.json();
 
-            return json.data.children;
+            return json;
 
         } catch (err) {
             console.log(err);
@@ -22,37 +22,49 @@ export const loadPostComments = createAsyncThunk(
 const commentSlice = createSlice({
     name: 'comment',
     initialState: {
-        comments: [],
-        isLoadingComments: false,
-        failedToLoadComments: false,
+        commentsContainer: []
     },
     extraReducers: (builder) => {
         builder
-            .addCase(loadPostComments.pending, (state) => {
-                state.isLoadingComments = true;
-                state.failedToLoadComments = false;
+            .addCase(loadPostComments.pending, (state, action) => {
+                const postID = action.meta.arg;
+                const container = state.commentsContainer.find(container => container.id === postID);
+
+                container.isLoadingComments = true;
+                container.failedToLoadComments = false;
             })
             .addCase(loadPostComments.fulfilled, (state, action) => {
-                state.isLoadingComments = false;
-                state.failedToLoadComments = false;
-                console.log(action.payload);
-                const data = action.payload;
-                
-                
+                const postID = action.meta.arg;
+                const container = state.commentsContainer.find(container => container.id === postID);
 
-                console.log("test");
-                
+                container.isLoadingComments = false;
+                container.failedToLoadComments = false;
+
+                container.comments = action.payload;
             })
-            .addCase(loadPostComments.rejected, (state) => {
-                state.isLoadingComments = false;
-                state.failedToLoadComments = true;
-                state.comments = [];
+            .addCase(loadPostComments.rejected, (state, action) => {
+                const postID = action.meta.arg;
+                const container = state.commentsContainer.find(container => container.id === postID);
+
+                container.isLoadingComments = false;
+                container.failedToLoadComments = true;
+                container.comments = [];
             })
+    },
+    reducers: {
+        addCommentObject: (state, action) => {
+            state.commentsContainer.push({
+                id: action.payload,
+                comments: [],
+                isLoadingComment: false,
+                failedToLoadComments: false,
+            })
+        }
     }
 })
 
-export const selectComment = (state) => state.comment.comments;
-export const isLoadingComment = (state) => state.comment.isLoadingComment;
-export const failedToLoad = (state) => state.comment.failedToLoadComments;
+export const selectComment = (state) => state.comment.commentsContainer;
+
+export const {addCommentObject} = commentSlice.actions;
 
 export default commentSlice.reducer;

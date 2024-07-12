@@ -6,7 +6,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
     async () => {
-        console.log("run")
         try {
             const response = await fetch(`r/WutheringWaves.json`);
             console.log(response.headers.get("x-ratelimit-used"));
@@ -23,25 +22,9 @@ export const loadSubRedditPosts = createAsyncThunk(
         } catch (err) {
             console.log(err);
         }
-                
-
-            
-        //     // const json = response.json();
-        
-        // }, error => {
-        //     console.log(error);
-        // })
-
-    //   const response = await fetch(`r/WutheringWaves.json`);
-    //   console.log("rate: " + response.headers.get("x-ratelimit-used")
-    //              + " reset: " + response.headers.get("x-ratelimit-reset"))
-    //   const json = await response.json();
-
-        
-
-    //   return json.data.children;
     }
 )
+
 
 const postSlice = createSlice({
     name: 'post',
@@ -62,7 +45,7 @@ const postSlice = createSlice({
                 state.failedToLoadPosts = false;
                 const data = action.payload;
 
-                data.map(value => {
+                data.map((value, index) => {
                     state.posts.push({
                         id: value.data.id,
                         author: value.data.author,
@@ -71,10 +54,9 @@ const postSlice = createSlice({
                         image: value.data.url,
                         media: value.data.media,
                         likes: value.data.ups,
-                        isCommentToggle: false,
+                        isCommentToggle: false
                     })
                 })
-
             })
             .addCase(loadSubRedditPosts.rejected, (state) => {
                 console.log("Failed to load");
@@ -86,7 +68,7 @@ const postSlice = createSlice({
     },
     reducers: {
         toggleComment: (state, action) => {
-            const postToBeToggled = state.find(post => post.id === action.payload.id);
+            const postToBeToggled = state.posts.find(post => post.id === action.payload.id);
             if (postToBeToggled) {
                 postToBeToggled.isCommentToggled = !postToBeToggled.isCommentToggled;
             }
