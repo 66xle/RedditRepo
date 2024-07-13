@@ -12,7 +12,7 @@ function showImage(image)
 {
     // Check if url is an image
     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(image)) {
-        <img src={image} alt=""/>
+        return <img src={image} alt="image"/>
     }
 }
 
@@ -22,9 +22,9 @@ function showMedia(media)
         
         // Check if youtube video or reddit video
         if (media.type){
-            <video controls><source src={media.oembed.thumbnail_url} /></video>
+            return <video controls><source src={media.oembed.thumbnail_url} /></video>
         } else {
-            <video controls><source src={media.reddit_video.fallback_url} /></video>
+            return <video controls><source src={media.reddit_video.fallback_url} /></video>
         }
     }
 }
@@ -38,7 +38,7 @@ function Post({post}) {
 
     useEffect(() => {
         dispatch(addCommentObject(post.id));
-    }, [dispatch]);
+    }, [dispatch, post.id]);
 
     const handleComment = () => {
         // Load comment here
@@ -72,8 +72,6 @@ function Post({post}) {
             <DisplayComments post={post} commentContainer={commentContainer} />
         </div>
     )
-
-    
 }
 
 export default Post;
