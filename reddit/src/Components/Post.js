@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleComment } from '../Slices/postSlice';
 // import Comment from './Comment';
 import {loadPostComments, selectComment, failedToLoad, addCommentObject} from '../Slices/commentSlice.js';
-import Comment from './Comment.js';
+import DisplayComments from './DisplayComments.js';
 
 import snuownd from '../packages/snuownd-master/snuownd';
 
@@ -20,6 +20,7 @@ function showMedia(media)
 {
     if (media !== null) {
         
+        // Check if youtube video or reddit video
         if (media.type){
             <video controls><source src={media.oembed.thumbnail_url} /></video>
         } else {
@@ -28,21 +29,12 @@ function showMedia(media)
     }
 }
 
-function DisplayComments(comments) {
-
-    
-    <div>
-            {
-                comments.map(comment => <Comment comment={comment} key={comment.id}/>)
-            }
-    </div>
-}
-
 function Post({post}) {
 
     const dispatch = useDispatch();
     
-    const comments = useSelector(selectComment);
+    const commentContainerArr = useSelector(selectComment);
+    const commentContainer = commentContainerArr.find(container => container.id === post.id);
 
     useEffect(() => {
         dispatch(addCommentObject(post.id));
@@ -51,10 +43,7 @@ function Post({post}) {
     const handleComment = () => {
         // Load comment here
         dispatch(toggleComment(post));
-
-        console.log(comments);
         
-        const commentContainer = comments.find(container => container.id === post.id);
         if (commentContainer.comments.length === 0) {
             dispatch(loadPostComments(post.id));
         }
@@ -80,6 +69,7 @@ function Post({post}) {
                 <button onClick={handleComment}>💬</button>
                 <p className='ml-auto'>{post.timePosted} hours ago</p>
             </div>
+            <DisplayComments post={post} commentContainer={commentContainer} />
         </div>
     )
 

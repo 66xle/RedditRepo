@@ -53,7 +53,7 @@ const postSlice = createSlice({
                         content: value.data.selftext,
                         image: value.data.url,
                         media: value.data.media,
-                        likes: value.data.ups,
+                        likes: value.data.ups - value.data.downs,
                         isCommentToggle: false
                     })
                 })

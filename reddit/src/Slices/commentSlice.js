@@ -40,7 +40,18 @@ const commentSlice = createSlice({
                 container.isLoadingComments = false;
                 container.failedToLoadComments = false;
 
-                container.comments = action.payload;
+                const data = action.payload[1].data.children;
+
+                data.map(value => {
+                    container.comments.push({
+                        id: value.data.id,
+                        author: value.data.author,
+                        content: value.data.body,
+                        likes: value.data.ups - value.data.downs,
+                    })
+                })
+
+                console.log("Fetch Comments")
             })
             .addCase(loadPostComments.rejected, (state, action) => {
                 const postID = action.meta.arg;
