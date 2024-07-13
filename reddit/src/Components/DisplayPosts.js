@@ -4,19 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadSubRedditPosts, selectPost, isLoading, failedToLoad} from '../Slices/postSlice.js';
 
 
-function FailedToLoad(dispatch) {
-    
-    
-}
-
-function IsLoading() {
-    return (
-        <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
-            {/* Post Info */}
-            <h1 className="text-white text-xl">Loading...</h1>
-        </div>
-    )
-}
 
 function DisplayPosts() {
 
@@ -43,7 +30,12 @@ function DisplayPosts() {
             </div>
         )
     } else if (isLoadingPosts) {
-        IsLoading();
+        return (
+            <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
+                {/* Post Info */}
+                <h1 className="text-white text-xl">Loading...</h1>
+            </div>
+        )
     } else {
         return (
             <div>

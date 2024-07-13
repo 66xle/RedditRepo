@@ -8,14 +8,13 @@ export const loadSubRedditPosts = createAsyncThunk(
     async () => {
         try {
             const response = await fetch(`r/WutheringWaves.json`);
-            console.log(response.headers.get("x-ratelimit-used"));
+            console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
             if (response.status == 429) {
                 console.log("Limit Hit");
                 return Promise.reject("Too many requests");
             } else {
                 const json = await response.json();
-                console.log(json);
                 return json.data.children;
             }
 
