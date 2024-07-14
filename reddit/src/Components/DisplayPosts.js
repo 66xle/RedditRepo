@@ -5,7 +5,7 @@ import { loadSubRedditPosts, selectPost, isLoading, failedToLoad} from '../Slice
 
 
 
-function DisplayPosts() {
+function DisplayPosts({subReddit}) {
 
     const dispatch = useDispatch();
     const isLoadingPosts = useSelector(isLoading);
@@ -14,8 +14,10 @@ function DisplayPosts() {
     
 
     useEffect(() => {
-        dispatch(loadSubRedditPosts());
-    }, [dispatch]);
+        if (subReddit) {
+            dispatch(loadSubRedditPosts(subReddit));
+        }
+    }, [dispatch, subReddit]);
 
     if (failedToLoadPosts) {
         return (
@@ -25,7 +27,7 @@ function DisplayPosts() {
                 
                 {/* Under Content */}
                 <div className='mt-2 text-slate-300'>
-                    <button className='p-2 border rounded' onClick={() => dispatch(loadSubRedditPosts())}>Try Again</button>
+                    <button className='p-2 border rounded' onClick={() => dispatch(loadSubRedditPosts(subReddit))}>Try Again</button>
                 </div>
                 {console.log("run")}
             </div>

@@ -5,16 +5,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // Create loadSubRedditPosts here.
 export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
-    async () => {
+    async (subreddit) => {
         try {
-            const response = await fetch(`/api/r/WutheringWaves.json`);
+            const response = await fetch(`/api/r/${subreddit}.json`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
 
 
-            if (response.status == 429) {
+            if (response.status === 429) {
                 console.log("Limit Hit");
-                return Promise.reject("Too many requests");
+                return Promise.reject();
+            } else if (response.status === 500) {
+                console.log("Server error");
+                return Promise.reject();
             } else {
                 console.log("run")
                 const json = await response.json();
@@ -46,6 +49,7 @@ const postSlice = createSlice({
             .addCase(loadSubRedditPosts.fulfilled, (state, action) => {
                 state.isLoadingPosts = false;
                 state.failedToLoadPosts = false;
+                state.posts = []
                 const data = action.payload;
 
                 data.map((value, index) => {

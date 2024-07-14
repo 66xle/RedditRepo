@@ -6,9 +6,11 @@ import {loadPostComments, selectComment, failedToLoad, addCommentObject} from '.
 import DisplayComments from './DisplayComments.js';
 
 import VideoJS from './Video.js';
+import 'videojs-youtube';
 
 import timeAgo from '../Functions/Extension.js';
 import snuownd from '../packages/snuownd-master/snuownd';
+
 
 
 function showImage(post)
@@ -57,6 +59,9 @@ function showMedia(post)
         
         if (media.type === "twitch.tv") {
             return <img src={media.oembed.thumbnail_url} alt="image"/>
+        } else if (media.type === "youtube.com") {
+            videoJsOptions.sources.src = media.oembed.src;
+            videoJsOptions.sources.type = "video/youtube";
         }
 
         return (

@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import DisplayPosts from './Components/DisplayPosts.js';
-
+import SideBar from './Components/SideBar.js';
 
 function App() {
+
+
+  const [subReddit, setSubReddit] = useState('');
+
   return (
     <div className="App">
       <div className="text-center h-20 bg-slate-900" >
@@ -11,11 +16,12 @@ function App() {
       <div id="content" className="flex flex-row justify-evenly bg-slate-800">
         <div id="postDisplay" className=" text-center w-4/5 m-5 border">
           <h2 className="text-white">Display</h2>
-          <DisplayPosts />
+          <DisplayPosts subReddit={subReddit}/>
         </div>
 
         <div id="navBar" className="text-center sticky top-5 w-1/2 h-screen m-5 shadow-2xl rounded-3xl bg-slate-950">
           <h2 className="text-slate-600 pt-2.5">SubReddit</h2>
+          <SideBar setSubReddit={setSubReddit}/>
         </div>
       </div>
     </div>

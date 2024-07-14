@@ -9,7 +9,7 @@ module.exports = function(app) {
   );
 
   app.use(
-    '/image',
+    'https://v.redd.it/',
     createProxyMiddleware({
       target: 'https://v.redd.it/',
       changeOrigin: true,
