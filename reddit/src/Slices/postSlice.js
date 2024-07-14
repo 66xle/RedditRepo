@@ -7,7 +7,7 @@ export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
     async () => {
         try {
-            const response = await fetch(`r/WutheringWaves.json`);
+            const response = await fetch(`/api/r/WutheringWaves.json`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
 
@@ -16,13 +16,14 @@ export const loadSubRedditPosts = createAsyncThunk(
                 console.log("Limit Hit");
                 return Promise.reject("Too many requests");
             } else {
+                console.log("run")
                 const json = await response.json();
                 console.log(json)
                 return json.data.children;
             }
 
         } catch (err) {
-            console.log(err);
+            console.log("caught: " + err);
         }
     }
 )
@@ -55,6 +56,7 @@ const postSlice = createSlice({
                         content: value.data.selftext,
                         image: value.data.url,
                         media: value.data.media,
+                        mediaMetaData: value.data.media_metadata,
                         likes: value.data.ups - value.data.downs,
                         timePosted: value.data.created,
                         isCommentToggle: false

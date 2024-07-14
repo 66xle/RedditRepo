@@ -11,8 +11,30 @@ import timeAgo from '../Functions/Extension.js';
 import snuownd from '../packages/snuownd-master/snuownd';
 
 
-function showImage(image)
+function showImage(post)
 {
+    var metaData = post.mediaMetaData;
+
+    if (metaData) {
+        console.log(metaData)
+        
+        return (
+            <div>
+                {
+                    Object.keys(metaData).map(key => {
+
+                        const value = metaData[key];
+                        const type = value.m.replace("image/", "")
+                        const src = `https://i.redd.it/${key}.${type}`;
+
+                        return <img src={src} alt="image"/>
+                    })
+                }
+            </div>
+        )
+    }
+
+    const image = post.image;
     // Check if url is an image
     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(image)) {
         return <img src={image} alt="image"/>
@@ -34,7 +56,6 @@ function showMedia(post)
         }]}
         
         
-
         if (media.type === "twitch.tv") {
             return <img src={media.oembed.thumbnail_url} alt="image"/>
         }
@@ -76,7 +97,7 @@ function Post({post}) {
             <h1 className="text-left text-white text-xs">{post.author}</h1>
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
-                {showImage(post.image)}
+                {showImage(post)}
                 {showMedia(post)}
                 <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
