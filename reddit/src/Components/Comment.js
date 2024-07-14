@@ -1,4 +1,4 @@
-
+import timeAgo from "../Functions/Extension";
 
 function Comment({comment}) {
     return (
@@ -9,7 +9,7 @@ function Comment({comment}) {
             </div>
             <div className='mt-1 flex flex-row text-slate-300'>
                 <p className='mr-10'>{comment.likes} 👍</p>
-                <p className='ml-auto'>{comment.timePosted} hours ago</p>
+                <p className='ml-auto'>{timeAgo(comment.timePosted)}</p>
             </div>
         </div>
     )

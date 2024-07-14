@@ -47,6 +47,7 @@ const commentSlice = createSlice({
                         id: value.data.id,
                         author: value.data.author,
                         content: value.data.body,
+                        timePosted: value.data.created,
                         likes: value.data.ups - value.data.downs,
                     })
                 })

@@ -5,6 +5,7 @@ import { toggleComment } from '../Slices/postSlice';
 import {loadPostComments, selectComment, failedToLoad, addCommentObject} from '../Slices/commentSlice.js';
 import DisplayComments from './DisplayComments.js';
 
+import timeAgo from '../Functions/Extension.js';
 import snuownd from '../packages/snuownd-master/snuownd';
 
 
@@ -67,7 +68,7 @@ function Post({post}) {
             <div className='mt-2 flex flex-row text-slate-300'>
                 <p className='mr-10'>{post.likes} 👍</p>
                 <button onClick={handleComment}>💬</button>
-                <p className='ml-auto'>{post.timePosted} hours ago</p>
+                <p className='ml-auto'>{timeAgo(post.timePosted)}</p>
             </div>
             <DisplayComments post={post} commentContainer={commentContainer} />
         </div>

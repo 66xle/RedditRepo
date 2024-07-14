@@ -10,11 +10,14 @@ export const loadSubRedditPosts = createAsyncThunk(
             const response = await fetch(`r/WutheringWaves.json`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
+
+
             if (response.status == 429) {
                 console.log("Limit Hit");
                 return Promise.reject("Too many requests");
             } else {
                 const json = await response.json();
+                console.log(json)
                 return json.data.children;
             }
 
@@ -53,6 +56,7 @@ const postSlice = createSlice({
                         image: value.data.url,
                         media: value.data.media,
                         likes: value.data.ups - value.data.downs,
+                        timePosted: value.data.created,
                         isCommentToggle: false
                     })
                 })
