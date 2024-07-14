@@ -12,6 +12,7 @@ function DisplayPosts() {
     const failedToLoadPosts = useSelector(failedToLoad);
     const posts = useSelector(selectPost);
     
+
     useEffect(() => {
         dispatch(loadSubRedditPosts());
     }, [dispatch]);

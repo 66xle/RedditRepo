@@ -5,6 +5,8 @@ import { toggleComment } from '../Slices/postSlice';
 import {loadPostComments, selectComment, failedToLoad, addCommentObject} from '../Slices/commentSlice.js';
 import DisplayComments from './DisplayComments.js';
 
+import VideoJS from './Video.js';
+
 import timeAgo from '../Functions/Extension.js';
 import snuownd from '../packages/snuownd-master/snuownd';
 
@@ -19,14 +21,24 @@ function showImage(image)
 
 function showMedia(media)
 {
+
     if (media !== null) {
-        
-        // Check if youtube video or reddit video
-        if (media.type){
-            return <video controls><source src={media.oembed.thumbnail_url} /></video>
-        } else {
-            return <video controls><source src={media.reddit_video.fallback_url} /></video>
-        }
+
+        const videoJsOptions = {
+        autoplay: false,
+        controls: true,
+        responsive: true,
+        fluid: true,
+        sources: [{
+            src: media.type ? media.oembed.thumbnail_url : media.reddit_video.fallback_url
+        }]
+    }
+
+        return (
+            <div>
+                <VideoJS options={videoJsOptions} />
+            </div>
+        );
     }
 }
 
