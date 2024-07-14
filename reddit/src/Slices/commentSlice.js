@@ -6,7 +6,7 @@ export const loadPostComments = createAsyncThunk(
     'posts/loadPostComments',
     async (id) => {
         try {
-            const response = await fetch(`r/WutheringWaves/comments/${id}/.json`);
+            const response = await fetch(`/api/r/WutheringWaves/comments/${id}/.json`);
             console.log(response.headers.get("x-ratelimit-used"));
 
             const json = await response.json();
