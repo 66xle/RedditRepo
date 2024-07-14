@@ -19,20 +19,25 @@ function showImage(image)
     }
 }
 
-function showMedia(media)
+function showMedia(post)
 {
-
+    const media = post.media;
     if (media !== null) {
 
-        const videoJsOptions = {
+        var videoJsOptions = {
         autoplay: false,
-        controls: true,
         responsive: true,
+        controls: true,
         fluid: true,
         sources: [{
             src: media.type ? media.oembed.thumbnail_url : media.reddit_video.fallback_url
-        }]
-    }
+        }]}
+        
+        
+
+        if (media.type === "twitch.tv") {
+            return <img src={media.oembed.thumbnail_url} alt="image"/>
+        }
 
         return (
             <div>
@@ -63,8 +68,7 @@ function Post({post}) {
     };
 
 
-    var markdown = post.content;
-    var html = snuownd.getParser().render(markdown);
+    var html = snuownd.getParser().render(post.content);
 
     return (
         <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
@@ -73,7 +77,7 @@ function Post({post}) {
             <h1 className='text-left text-white text-xl'>{post.title}</h1>
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
                 {showImage(post.image)}
-                {showMedia(post.media)}
+                {showMedia(post)}
                 <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
             </div>
             {/* Under Content */}
