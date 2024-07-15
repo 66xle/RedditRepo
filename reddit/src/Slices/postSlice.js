@@ -7,7 +7,7 @@ export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
     async (subreddit, { rejectWithValue }) => {
         try {
-            const response = await fetch(`r/${subreddit}.json`);
+            const response = await fetch(`r/${subreddit}.json?raw_json=1`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
 
@@ -23,7 +23,7 @@ export const loadSubRedditPosts = createAsyncThunk(
             }
 
         } catch (err) {
-            console.log("caught: " + err);
+            console.log(err);
             return rejectWithValue(err.message);
         }
     }
@@ -55,7 +55,7 @@ const postSlice = createSlice({
                         id: value.data.id,
                         author: value.data.author,
                         title: value.data.title,
-                        content: value.data.selftext,
+                        content: value.data.selftext_html,
                         image: value.data.url,
                         media: value.data.media,
                         mediaMetaData: value.data.media_metadata,

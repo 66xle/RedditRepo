@@ -42,7 +42,7 @@ function DisplayPosts({subReddit}) {
     } else {
         return (
             <div>
-                {posts.map(post => <Post post={post} key={post.id}/>)}
+                {posts.map(post => <Post post={post} key={post.id} subReddit={subReddit}/>)}
             </div>
         )
     }

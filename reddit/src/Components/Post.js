@@ -9,7 +9,6 @@ import VideoJS from './Video.js';
 import 'videojs-youtube';
 
 import timeAgo from '../Functions/Extension.js';
-import snuownd from '../packages/snuownd-master/snuownd';
 
 
 
@@ -75,7 +74,7 @@ function showMedia(post)
     }
 }
 
-function Post({post}) {
+function Post({post, subReddit}) {
 
     const dispatch = useDispatch();
     
@@ -91,12 +90,9 @@ function Post({post}) {
         dispatch(toggleComment(post));
         
         if (commentContainer.comments.length === 0) {
-            dispatch(loadPostComments(post.id));
+            dispatch(loadPostComments({id: post.id, subReddit}));
         }
     };
-
-
-    var html = snuownd.getParser().render(post.content);
 
     return (
         <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700'>
@@ -106,7 +102,7 @@ function Post({post}) {
             <div className='text-left overflow-hidden whitespace-pre text-wrap'> 
                 {showImage(post)}
                 {showMedia(post)}
-                <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: html }} />
+                <div className="text-slate-400" dangerouslySetInnerHTML={{ __html: post.content }} />
             </div>
             {/* Under Content */}
             <div className='mt-2 flex flex-row text-slate-300'>
@@ -114,7 +110,7 @@ function Post({post}) {
                 <button onClick={handleComment}>💬</button>
                 <p className='ml-auto'>{timeAgo(post.timePosted)}</p>
             </div>
-            <DisplayComments post={post} commentContainer={commentContainer} />
+            <DisplayComments post={post} commentContainer={commentContainer}/>
         </div>
     )
 }
