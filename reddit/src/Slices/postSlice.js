@@ -5,19 +5,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // Create loadSubRedditPosts here.
 export const loadSubRedditPosts = createAsyncThunk(
     'posts/loadSubRedditPosts',
-    async (subreddit) => {
+    async (subreddit, { rejectWithValue }) => {
         try {
-            const response = await fetch(`/api/r/${subreddit}.json`);
+            const response = await fetch(`r/${subreddit}.json`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
 
 
-            if (response.status === 429) {
-                console.log("Limit Hit");
-                return Promise.reject();
-            } else if (response.status === 500) {
-                console.log("Server error");
-                return Promise.reject();
+            if (!response.ok) {
+                console.log("Error: " + response.status);
+                return rejectWithValue(`Error: ${response.status}`);
             } else {
                 console.log("run")
                 const json = await response.json();
@@ -27,6 +24,7 @@ export const loadSubRedditPosts = createAsyncThunk(
 
         } catch (err) {
             console.log("caught: " + err);
+            return rejectWithValue(err.message);
         }
     }
 )
