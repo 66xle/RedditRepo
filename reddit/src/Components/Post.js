@@ -18,17 +18,20 @@ function showImage(post)
     var metaData = post.mediaMetaData;
 
     if (metaData) {
-        
         return (
             <div>
                 {
+                    
                     Object.keys(metaData).map(key => {
 
                         const value = metaData[key];
-                        const type = value.m.replace("image/", "")
-                        const src = `https://i.redd.it/${key}.${type}`;
+                        if (value.m) {
+                            const type = value.m.replace("image/", "")
+                            const src = `https://i.redd.it/${key}.${type}`;
 
-                        return <img src={src} alt="image" key={key}/>
+                            return <img src={src} alt="image" key={key}/>
+                        }
+                        return null;
                     })
                 }
             </div>
