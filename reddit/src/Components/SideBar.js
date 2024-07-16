@@ -4,7 +4,7 @@ function SideBar({setSubReddit}) {
 
 
     return (
-        <div>
+        <div className="text-nowrap">
             <div className='p-3 m-5 shadow-inner rounded-md bg-slate-700 cursor-pointer' onClick={() => setSubReddit("HonkaiStarRail")}>
                 <div className="flex flex-row text-center items-center space-x-2">
                     <h1 className="text-left text-white text-xl">Image</h1>
