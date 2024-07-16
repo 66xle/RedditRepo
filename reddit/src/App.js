@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import DisplayPosts from './Components/DisplayPosts.js';
 import SideBar from './Components/SideBar.js';
+import "./App.css";
 
 // sticky top-5
 
