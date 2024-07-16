@@ -7,7 +7,7 @@ export const loadPostComments = createAsyncThunk(
     async ({id, subReddit}, { rejectWithValue }) => {
         try {
             console.log(subReddit);
-            const response = await fetch(`r/${subReddit}/comments/${id}/.json?raw_json=1`);
+            const response = await fetch(`https://www.reddit.com/r/${subReddit}/comments/${id}/.json?raw_json=1`);
             console.log("Limit Used: " + response.headers.get("x-ratelimit-used"));
             console.log(response);
 
